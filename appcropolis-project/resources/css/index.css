@@ -924,6 +924,13 @@ a{
     .project-container {
         grid-template-columns: 1fr;
     }
+      
+      .footer .col {
+        text-align: center;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+    }
 }
 
 /*------------------------------------------------------------
@@ -944,19 +951,15 @@ a{
 ------------------------------------------------------------*/
 @media screen and (max-width: 365px) {
     .home-img img {
-        width: 90vw;
+        width: 80vw;
     }
 
     .about-img img {
-        width: 90vw;
+        width: 80vw;
     }
 
     .footer {
         flex-direction: column-reverse;
     }
 
-    .footer p {
-        text-align: center;
-        margin-top: 3rem;
-    }
 }
