@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product</title>
+    <meta name="description"
+        content="Trendy Brown Coat on sale — double-breasted, wide lapel, adjustable belt. Comfortable for casual to semi-formal occasions." />
+
+    <style>
+        :root {
+            --bg: #0b0c0f;
+            --card: #12141a;
+            --text: #e7e9ee;
+            --muted: #aab0bd;
+            --brand: #e86e36;
+            /* warm accent to match the brown vibe */
+            --brand-2: #ffb26a;
+            /* secondary accent for highlights */
+            --success: #37c978;
+            --error: #ff5a6b;
+            --border: #1b1f27;
+            --ring: rgba(232, 110, 54, 0.35);
+            --shadow: rgba(0, 0, 0, 0.35);
+            --radius: 14px;
+            --radius-sm: 10px;
+            --radius-lg: 18px;
+            --gap: 16px;
+            --gap-lg: 24px;
+            --gap-xl: 32px;
+            --maxw: 1200px;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f6f7fb;
+                --card: #ffffff;
+                --text: #0f1220;
+                --muted: #4b5363;
+                --border: #e6e8ee;
+                --ring: rgba(232, 110, 54, 0.25);
+                --shadow: rgba(0, 0, 0, 0.08);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background: radial-gradient(1200px 600px at 70% -10%, rgba(232, 110, 54, 0.12), transparent 60%),
+                radial-gradient(900px 400px at 10% -10%, rgba(255, 178, 106, 0.10), transparent 55%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header.site {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--gap);
+            padding: 12px 0 8px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .brand .logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            box-shadow: 0 6px 18px var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #0f0f10;
+        }
+
+        nav.actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Form */
+        .ytm-search__form {
+            position: relative;
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            align-items: center;
+            gap: .5rem;
+            padding: .6rem .6rem .6rem .6rem;
+            border-radius: var(--border);
+            background: var(--surface);
+            border: 1px solid var(--surface-strong);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            box-shadow: var(--shadow);
+            animation: expandIn 420ms var(--curve) both;
+        }
+
+        .icon-btn {
+            display: inline-grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: color var(--duration) var(--curve), background var(--duration) var(--curve), transform var(--duration) var(--curve);
+        }
+
+        .icon-btn:hover {
+            color: var(--focus);
+            background: var(--surface-strong);
+        }
+
+        .icon-btn:active {
+            transform: scale(.96);
+        }
+
+        .icon-btn--search {
+            color: var(--text);
+        }
+
+        .icon-btn--clear[hidden] {
+            display: none;
+        }
+
+        .ytm-search__input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1rem;
+            padding: .4rem .2rem;
+            outline: none;
+        }
+
+        .ytm-search__input::placeholder {
+            color: var(--muted);
+            transition: transform var(--duration) var(--curve), opacity var(--duration) var(--curve);
+        }
+
+        .ytm-search__input:focus::placeholder {
+            transform: translateX(.25rem);
+            opacity: .7;
+        }
+
+        /* Underline accent */
+        .underline {
+            position: absolute;
+            left: 52px;
+            right: 90px;
+            bottom: 6px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transform: translateY(2px);
+            pointer-events: none;
+        }
+
+        .ytm-search__form.is-active .underline {
+            animation: sweep 900ms var(--curve);
+            opacity: 1;
+        }
+
+        /* Focus ring + glow */
+        .ytm-search__form:focus-within {
+            box-shadow: 0 0 0 3px var(--ring), var(--shadow);
+        }
+
+        .ytm-search__form:focus-within .ytm-search__input {
+            animation: focusGlow 700ms var(--curve);
+        }
+
+        /* Mic equalizer bars */
+        .icon-btn--mic {
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+
+        .icon-btn--mic .eq {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+        }
+
+        .icon-btn--mic .eq i {
+            display: inline-block;
+            width: 2px;
+            height: 6px;
+            margin: 0 1px;
+            background: var(--accent);
+            border-radius: 1px;
+            transform-origin: bottom center;
+            opacity: 0;
+            transform: scaleY(0.4);
+        }
+
+        /* Active recording state toggles animation */
+        .icon-btn--mic.is-recording .eq i {
+            opacity: 1;
+            animation: bars 800ms ease-in-out infinite;
+        }
+
+        .icon-btn--mic.is-recording .eq i:nth-child(2) {
+            animation-delay: 120ms;
+        }
+
+        .icon-btn--mic.is-recording .eq i:nth-child(3) {
+            animation-delay: 240ms;
+        }
+
+        /* Suggestions panel */
+        .suggestions {
+            list-style: none;
+            margin: 0;
+            padding: .5rem;
+            border-radius: .75rem;
+            border: 1px solid var(--surface-strong);
+            background: linear-gradient(0deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .02));
+            box-shadow: var(--shadow);
+        }
+
+        .suggestions[hidden] {
+            display: none;
+        }
+
+        .suggestions li {
+            display: grid;
+            grid-template-columns: 24px 1fr auto;
+            align-items: center;
+            gap: .75rem;
+            padding: .6rem .5rem;
+            border-radius: .5rem;
+            transition: background var(--duration) var(--curve);
+        }
+
+        .suggestions li:hover {
+            background: var(--surface);
+        }
+
+        .suggestions .hint {
+            color: var(--muted);
+            font-size: .9rem;
+        }
+
+        /* Keyframes */
+        @keyframes expandIn {
+            from {
+                transform: translateY(8px) scale(.98);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes focusGlow {
+            0% {
+                text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+            }
+
+            40% {
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.18);
+            }
+
+            100% {
+                text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes sweep {
+            0% {
+                transform: translateY(2px) translateX(-8%);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(2px) translateX(8%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bars {
+
+            0%,
+            100% {
+                transform: scaleY(0.5);
+            }
+
+            50% {
+                transform: scaleY(1.6);
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* A11y utility */
+        .visually-hidden {
+            position: absolute !important;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            white-space: nowrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.03));
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform .12s ease, border-color .15s ease, box-shadow .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            border-color: color-mix(in oklab, var(--brand) 35%, var(--border));
+        }
+
+        .btn:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--ring);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            color: #111215;
+            border: none;
+            box-shadow: 0 8px 28px rgba(232, 110, 54, 0.35);
+        }
+
+        .btn.ghost {
+            background: transparent;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: var(--gap-xl);
+            margin-top: 18px;
+        }
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            fill: currentColor;
+            margin-right: 0.5em;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.6em 1em;
+            font-size: 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .btn.ghost {
+            color: #555;
+        }
+
+        .btn.primary {
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 980px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Product gallery */
+        .gallery {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04)), var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: var(--gap);
+            box-shadow: 0 20px 50px var(--shadow);
+        }
+
+        .media {
+            position: relative;
+            aspect-ratio: 4/5;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: #0f0f12;
+        }
+
+        .media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.02);
+            transition: transform .6s ease;
+        }
+
+        .media:hover img {
+            transform: scale(1.04);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 2;
+            background: #121416cc;
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: #ffd8c3;
+            padding: 8px 12px;
+            font-weight: 700;
+            letter-spacing: .4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .thumbs {
+            margin-top: var(--gap);
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .thumb {
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: #0f1014;
+            transition: transform .12s ease, border-color .15s ease;
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .thumb:hover {
+            transform: translateY(-2px);
+            border-color: color-mix(in oklab, var(--brand) 35%, var(--border));
+        }
+
+        .thumb.active {
+            outline: 3px solid var(--ring);
+            border-color: transparent;
+        }
+
+        /* Product details */
+        .panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .stars {
+            color: #ffb648;
+            letter-spacing: 2px;
+        }
+
+        .title {
+            font-size: clamp(22px, 3vw, 34px);
+            line-height: 1.15;
+            margin: 2px 0 4px
+        }
+
+        .sub {
+            color: var(--muted);
+        }
+
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .price-now {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ffe7d9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .price-old {
+            color: var(--muted);
+            text-decoration: line-through;
+            font-weight: 600;
+        }
+
+        .discount-chip {
+            background: linear-gradient(135deg, #1d2a22, #13201a);
+            color: #85ffba;
+            border: 1px solid #204a36;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .sizes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .chip {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.04));
+            font-weight: 700;
+            min-width: 54px;
+            text-align: center;
+            transition: transform .12s ease, border-color .15s ease, box-shadow .2s ease;
+        }
+
+        .chip:hover {
+            transform: translateY(-1px);
+            border-color: color-mix(in oklab, var(--brand) 35%, var(--border));
+        }
+
+        .chip[aria-pressed="true"] {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            color: #121215;
+            border: none;
+            box-shadow: 0 10px 28px rgba(232, 110, 54, 0.35);
+        }
+
+        .desc {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.03)), var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .meta strong {
+            color: var(--text);
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            border: 1px dashed var(--border);
+            color: var(--muted);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 700;
+            background: #0f1013;
+        }
+
+        .cta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .qty {
+            display: inline-flex;
+            align-items: center;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--card);
+        }
+
+        .qty button {
+            all: unset;
+            cursor: pointer;
+            padding: 10px 12px;
+            font-weight: 800;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04));
+        }
+
+        .qty input {
+            width: 54px;
+            text-align: center;
+            padding: 10px 0;
+            border: 0;
+            background: transparent;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        /* Related products */
+        .section {
+            margin-top: 36px;
+        }
+
+        .section h3 {
+            margin: 0 0 14px;
+            font-size: 20px;
+        }
+
+        .related {
+            display: grid;
+            gap: var(--gap-lg);
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 1100px) {
+            .related {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 820px) {
+            .related {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 520px) {
+            .related {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.04)), var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform .14s ease, border-color .15s ease, box-shadow .2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: color-mix(in oklab, var(--brand) 30%, var(--border));
+            box-shadow: 0 18px 40px var(--shadow);
+        }
+
+        .card .cover {
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            background: #0d0f12;
+            position: relative;
+        }
+
+        .card .cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card .body {
+            padding: 12px;
+        }
+
+        .card .title {
+            font-size: 16px;
+            margin: 2px 0 4px;
+        }
+
+        .mini {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            color: var(--muted);
+        }
+
+        .mini .stars {
+            font-size: 12px;
+        }
+
+        .price-pack {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .mini .now {
+            color: var(--text);
+            font-weight: 800;
+        }
+
+        .mini .old {
+            text-decoration: line-through
+        }
+
+        .mini .pct {
+            font-weight: 800;
+            color: #85ffba;
+            background: #13201a;
+            border: 1px solid #204a36;
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-size: 12px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            inset: auto 0 20px 0;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .toast .item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            pointer-events: auto;
+            background: #111417ee;
+            border: 1px solid var(--border);
+            color: #dfffea;
+            padding: 12px 14px;
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4)
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+    <a class="sr-only" href="#main">Skip to content</a>
+
+    <div class="container">
+        <header class="site" role="banner">
+            <a class="brand" href="#">
+                <div class="logo">SW</div>
+                <strong>ShraWaan</strong>
+            </a>
+            <nav class="actions" aria-label="Store actions">
+                <!-- Search Component -->
+                <div class="ytm-search" aria-label="Search">
+                    <form class="ytm-search__form" role="search" aria-label="Search library" autocomplete="off">
+                        <button class="icon-btn icon-btn--search" type="submit" aria-label="Search">
+                            <!-- Magnifier -->
+                            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2">
+                                </circle>
+                                <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round"></line>
+                            </svg>
+                        </button>
+
+                        <label class="visually-hidden" for="ytm-search-input">Search music</label>
+                        <input id="ytm-search-input" class="ytm-search__input" type="text" name="q" inputmode="search"
+                            placeholder="Search Product..." aria-autocomplete="list" aria-expanded="false"
+                            aria-controls="ytm-suggestions" />
+
+                        <!-- Animated bars -->
+                        <span class="eq">
+                            <i></i><i></i><i></i>
+                        </span>
+
+                        <span class="underline" aria-hidden="true"></span>
+                    </form>
+
+                    <ul id="ytm-suggestions" class="suggestions" role="listbox" hidden></ul>
+                </div>
+
+
+                <button class="btn" type="button" aria-label="Wishlist">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+               14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+               6.86-8.55 11.54L12 21.35z" />
+                    </svg>
+                    Wishlist
+                </button>
+
+                <button class="btn primary" type="button" id="openCart" aria-label="Cart">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 
+               2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 
+               22 17 22s2-.9 2-2-.9-2-2-2zM7.16 14l.84-2h8.99c.75 
+               0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0021.58 
+               3H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 
+               14.37 5.48 16 7 16h12v-2H7.16z" />
+                    </svg>
+                    Cart
+                </button>
+            </nav>
+
+        </header>
+
+        <main id="main" class="grid">
+            <!-- GALLERY -->
+            <section class="gallery" aria-labelledby="prodTitle">
+                <div class="media">
+                    <div class="badge" aria-hidden="true">🔥 50% OFF</div>
+                    <img id="mainImg" src="./appcropolis-project/resources/assets/gallery/image/product/p3.png"
+                        alt="Trendy Brown Coat — front pose" />
+                </div>
+                <div class="thumbs" role="tablist" aria-label="More product photos">
+                    <button class="thumb active" role="tab" aria-selected="true" aria-controls="mainImg">
+                        <img src="./appcropolis-project/resources/assets/gallery/image/product/deep-red-warm-tone.png"
+                            alt="Front view" />
+                    </button>
+                    <button class="thumb" role="tab" aria-selected="false" aria-controls="mainImg">
+                        <img src="./appcropolis-project/resources/assets/gallery/image/product/royal-blue.png"
+                            alt="Side pose with belt" />
+                    </button>
+                    <button class="thumb" role="tab" aria-selected="false" aria-controls="mainImg">
+                        <img src="./appcropolis-project/resources/assets/gallery/image/product/bright-yellow-warm-tone.png"
+                            alt="Back detail" />
+                    </button>
+                    <button class="thumb" role="tab" aria-selected="false" aria-controls="mainImg">
+                        <img src="./appcropolis-project/resources/assets/gallery/image/product/pure-white-cool-tone.png"
+                            alt="Lifestyle close-up" />
+                    </button>
+                    <button class="thumb" role="tab" aria-selected="false" aria-controls="mainImg">
+                        <img src="./appcropolis-project/resources/assets/gallery/image/product/dark-gray.png"
+                            alt="Studio detail" />
+                    </button>
+                </div>
+            </section>
+
+            <!-- DETAILS -->
+            <section class="panel" aria-labelledby="prodTitle">
+                <div class="rating" aria-label="Product rating 4.4 out of 5 stars from 245 reviews">
+                    <span class="stars" aria-hidden="true">★★★★☆</span>
+                    <span><strong>4.4</strong> (245 reviews)</span>
+                </div>
+
+                <h1 class="title" id="prodTitle">T-Shart By Shrawaan</h1>
+                <p class="sub">Double-breasted with wide lapel and adjustable belt — comfortable, versatile, and built
+                    for casual to semi-formal looks.</p>
+
+                <div class="price-row" aria-live="polite">
+                    <div class="price-now">$<span id="priceNow">75.00</span></div>
+                    <div class="price-old">$<span id="priceOld">150.00</span></div>
+                    <div class="discount-chip" id="discountPct">50% OFF</div>
+                </div>
+
+                <div>
+                    <strong>Size</strong>
+                    <div class="sizes" role="radiogroup" aria-label="Choose size" id="sizeGroup">
+                        <button class="chip" role="radio" aria-pressed="false" data-size="S">S</button>
+                        <button class="chip" role="radio" aria-pressed="true" data-size="M">M</button>
+                        <button class="chip" role="radio" aria-pressed="false" data-size="L">L</button>
+                        <button class="chip" role="radio" aria-pressed="false" data-size="XL">XL</button>
+                        <button class="chip" role="radio" aria-pressed="false" data-size="XXL">XXL</button>
+                    </div>
+                </div>
+
+                <div class="desc">
+                    <p><strong>Description:</strong> A cozy, breathable coat with adjustable belt detail for a
+                        personalized fit. Made for all-day comfort whether you’re out in Parit Buntar or dressing up for
+                        a city night out.</p>
+                </div>
+
+                <div class="meta">
+                    <div><strong>SKU:</strong> GHF1923SAAA</div>
+                    <div class="tags" aria-label="Tags">
+                        <span class="tag">Women</span>
+                        <span class="tag">Casual Fashion</span>
+                        <span class="tag">Jacket</span>
+                    </div>
+                </div>
+
+                <div class="cta">
+                    <div class="qty" aria-label="Quantity">
+                        <button type="button" id="decQty" aria-label="Decrease quantity">−</button>
+                        <input id="qty" value="1" inputmode="numeric" pattern="[0-9]*" aria-label="Quantity value" />
+                        <button type="button" id="incQty" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="btn primary" id="addToCart" type="button" aria-label="Add to cart">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 
+             2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 
+             22 17 22s2-.9 2-2-.9-2-2-2zM7.16 14l.84-2h8.99c.75 
+             0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0021.58 
+             3H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 
+             14.37 5.48 16 7 16h12v-2H7.16z" />
+                        </svg>
+                        Add to cart
+                    </button>
+
+                    <button class="btn" type="button" id="buyNow" aria-label="Buy now">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z" />
+                        </svg>
+                        Buy now
+                    </button>
+
+                </div>
+            </section>
+        </main>
+
+        <!-- RELATED -->
+        <section class="section" aria-labelledby="relHead">
+            <h3 id="relHead">Related products</h3>
+            <div class="related" id="relatedGrid" role="list">
+                <!-- Cards injected by JS for easy reuse -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" aria-live="polite" aria-atomic="true" id="toast" hidden>
+        <div class="item" role="status">
+            <span>✅</span>
+            <span id="toastMsg">Added to cart</span>
+        </div>
+    </div>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+   {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "Trendy Brown Coat",
+    "image": [
+      "https://images.unsplash.com/photo-1548883354-7622d03acae2",
+      "https://images.unsplash.com/photo-1520975693416-353c7b27296f",
+      "https://images.unsplash.com/photo-1539532399813-1f7cf3c5262e"
+    ],
+    "sku": "GHF1923SAAA",
+    "brand": { "@type": "Brand", "name": "ShraWaan" },
+    "description": "Double-breasted brown coat with wide lapel and adjustable belt. Comfortable, versatile, and suitable for various occasions.",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": "75.00",
+      "url": "https://example.com/products/trendy-brown-coat",
+      "availability": "https://schema.org/InStock"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.4",
+      "reviewCount": "245"
+    }
+  }
+  </script>
+
+    <script>
+        // Helpers
+        const $ = (sel, parent = document) => parent.querySelector(sel);
+        const $$ = (sel, parent = document) => [...parent.querySelectorAll(sel)];
+
+        // Gallery thumbs -> swap main image
+        const mainImg = $("#mainImg");
+        $$(".thumb").forEach(btn => {
+            btn.addEventListener("click", () => {
+                $$(".thumb").forEach(b => { b.classList.remove("active"); b.setAttribute("aria-selected", "false") });
+                btn.classList.add("active");
+                btn.setAttribute("aria-selected", "true");
+                const img = btn.querySelector("img");
+                // Use larger variant if available (w=1200)
+                const src = img.src.replace(/w=\d+/, "w=1200");
+                mainImg.src = src;
+                mainImg.alt = img.alt.replace("thumbnail", "").trim();
+            });
+        });
+
+        // Price logic (kept dynamic for reuse)
+        const priceOld = 150;
+        const priceNow = 75;
+        $("#priceOld").textContent = priceOld.toFixed(2);
+        $("#priceNow").textContent = priceNow.toFixed(2);
+        const pct = Math.round((1 - priceNow / priceOld) * 100);
+        $("#discountPct").textContent = pct + "% OFF";
+
+        // Size toggle as radio
+        const sizeGroup = $("#sizeGroup");
+        sizeGroup.addEventListener("click", e => {
+            const btn = e.target.closest(".chip");
+            if (!btn) return;
+            $$(".chip", sizeGroup).forEach(c => c.setAttribute("aria-checked", "false"));
+            btn.setAttribute("aria-checked", "true");
+        });
+
+        // Qty controls
+        const qtyInput = $("#qty");
+        const clampQty = v => Math.max(1, Math.min(10, v)); // clamp 1..10
+        $("#incQty").addEventListener("click", () => qtyInput.value = clampQty(+qtyInput.value + 1));
+        $("#decQty").addEventListener("click", () => qtyInput.value = clampQty(+qtyInput.value - 1));
+        qtyInput.addEventListener("input", () => {
+            const n = parseInt(qtyInput.value.replace(/[^\d]/g, "") || "1", 10);
+            qtyInput.value = clampQty(n);
+        });
+
+        // Cart simulation with localStorage
+        const CART_KEY = "shrawaan_cart";
+        const getCart = () => {
+            try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); } catch { return []; }
+        };
+        const setCart = (data) => localStorage.setItem(CART_KEY, JSON.stringify(data));
+
+        function addToCart(item) {
+            const cart = getCart();
+            const idx = cart.findIndex(p => p.sku === item.sku && p.size === item.size);
+            if (idx >= 0) cart[idx].qty = clampQty(cart[idx].qty + item.qty);
+            else cart.push(item);
+            setCart(cart);
+        }
+
+        // Toast
+        const toast = $("#toast");
+        const toastMsg = $("#toastMsg");
+        let toastTimer;
+        function showToast(msg) {
+            toastMsg.textContent = msg;
+            toast.hidden = false;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { toast.hidden = true; }, 1700);
+        }
+
+        // Add to cart / Buy now
+        $("#addToCart").addEventListener("click", () => {
+            const sizeBtn = $$(".chip", sizeGroup).find(b => b.getAttribute("aria-pressed") === "true");
+            const size = sizeBtn ? sizeBtn.dataset.size : "M";
+            const qty = clampQty(+qtyInput.value || 1);
+            addToCart({
+                sku: "GHF1923SAAA",
+                title: "Trendy Brown Coat",
+                price: priceNow,
+                size,
+                qty,
+                image: mainImg.src
+            });
+            showToast(`Added ${qty} × ${size} to cart`);
+        });
+
+        $("#buyNow").addEventListener("click", () => {
+            const sizeBtn = $$(".chip", sizeGroup).find(b => b.getAttribute("aria-pressed") === "true");
+            const size = sizeBtn ? sizeBtn.dataset.size : "M";
+            const qty = clampQty(+qtyInput.value || 1);
+            addToCart({
+                sku: "GHF1923SAAA",
+                title: "Trendy Brown Coat",
+                price: priceNow,
+                size,
+                qty,
+                image: mainImg.src
+            });
+            // In real app, redirect to checkout
+            showToast("Redirecting to checkout…");
+        });
+
+        // Related products data (matches your list)
+        const related = [
+            { title: "Brown Winter Coat", now: 60.00, old: 100.00, rating: 4.8, img: "appcropolis-project/resources/assets/gallery/image/product/deep-red-warm-tone.png" },
+            { title: "Classy Light Coat", now: 165.00, old: 220.00, rating: 4.8, img: "appcropolis-project/resources/assets/gallery/image/product/royal-blue.png" },
+            { title: "Modern White Suit", now: 120.00, old: 150.00, rating: 4.9, img: "appcropolis-project/resources/assets/gallery/image/product/pure-white-cool-tone.png" },
+            { title: "Elegant Gray Coat", now: 180.00, old: 200.00, rating: 4.7, img: "appcropolis-project/resources/assets/gallery/image/product/dark-gray.png" },
+            { title: "Elegant Gray Coat", now: 180.00, old: 200.00, rating: 4.7, img: "appcropolis-project/resources/assets/gallery/image/product/bright-yellow-warm-tone.png" },
+        ];
+        const relGrid = $("#relatedGrid");
+        related.forEach(item => {
+            const pct = Math.round((1 - item.now / item.old) * 100);
+            const el = document.createElement("article");
+            el.className = "card";
+            el.setAttribute("role", "listitem");
+            el.innerHTML = `
+        <div class="cover">
+          <img src="${item.img}" alt="${item.title}" loading="lazy" />
+        </div>
+        <div class="body">
+          <div class="title">${item.title}</div>
+          <div class="mini">
+            <span class="stars" aria-label="Rating ${item.rating} out of 5">★★★★★</span>
+            <div class="price-pack">
+              <span class="now">$${item.now.toFixed(2)}</span>
+              <span class="old">$${item.old.toFixed(2)}</span>
+              <span class="pct">${pct}%</span>
+            </div>
+          </div>
+        </div>
+      `;
+            relGrid.appendChild(el);
+        });
+
+        // Mock cart open
+        $("#openCart").addEventListener("click", () => {
+            const cart = getCart();
+            showToast(cart.length ? `Cart: ${cart.length} item(s)` : "Cart is empty");
+        });
+
+        // Search
+        const form = document.querySelector('.ytm-search__form');
+        const input = document.getElementById('ytm-search-input');
+        const clearBtn = document.querySelector('.icon-btn--clear');
+        const micBtn = document.querySelector('.icon-btn--mic');
+        const suggestions = document.getElementById('ytm-suggestions');
+        let isSearching = false;
+
+        // Keyboard shortcuts
+        window.addEventListener('keydown', (e) => {
+            // Focus with '/'
+            if (e.key === '/' && document.activeElement !== input) {
+                e.preventDefault();
+                input.focus();
+            }
+            // Clear with Esc
+            if (e.key === 'Escape') {
+                clearSearch();
+                input.blur();
+            }
+        });
+
+        // Input handling
+        input.addEventListener('input', () => {
+            const hasValue = input.value.trim().length > 0;
+            clearBtn.hidden = !hasValue;
+            input.setAttribute('aria-expanded', hasValue ? 'true' : 'false');
+            if (hasValue) renderSuggestions(input.value.trim());
+            else hideSuggestions();
+        });
+
+        // Focus underline sweep
+        input.addEventListener('focus', () => {
+            form.classList.add('is-active');
+            // retrigger sweep by toggling class
+            requestAnimationFrame(() => {
+                form.classList.remove('is-active');
+                requestAnimationFrame(() => form.classList.add('is-active'));
+            });
+        });
+        input.addEventListener('blur', () => {
+            // delay to allow click on suggestions
+            setTimeout(() => {
+                if (!form.contains(document.activeElement)) hideSuggestions();
+            }, 120);
+        });
+
+        // Submit “search”
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (isSearching) return;
+            const q = input.value.trim();
+            if (!q) return;
+            pulseUnderline();
+            simulateSearch(q);
+        });
+
+        // Clear
+        clearBtn.addEventListener('click', () => clearSearch());
+
+        // Mic toggle (demo)
+        micBtn.addEventListener('click', () => {
+            micBtn.classList.toggle('is-recording');
+        });
+
+        // Helpers
+        function clearSearch() {
+            input.value = '';
+            clearBtn.hidden = true;
+            hideSuggestions();
+        }
+
+        function pulseUnderline() {
+            form.classList.remove('is-active');
+            requestAnimationFrame(() => form.classList.add('is-active'));
+        }
+
+        function simulateSearch(q) {
+            isSearching = true;
+            setBusy(true);
+            // fake delay
+            setTimeout(() => {
+                isSearching = false;
+                setBusy(false);
+                // After search, keep suggestions with a “Top result”
+                renderSuggestions(q, true);
+            }, 800);
+        }
+
+        function setBusy(state) {
+            form.querySelector('.icon-btn--search').disabled = state;
+            input.disabled = state;
+            input.setAttribute('aria-busy', state ? 'true' : 'false');
+        }
+
+        function renderSuggestions(q, includeTop = false) {
+            const base = [
+                { icon: '👕', text: `${q} Product`, hint: 'T-Shart' },
+            ];
+            const list = includeTop ? [{ icon: '⭐', text: `Top result for "${q}"`, hint: 'Suggested' }, ...base] : base;
+
+            suggestions.innerHTML = list.map(item => `
+    <li role="option" tabindex="0">
+      <span>${item.icon}</span>
+      <span>${item.text}</span>
+      <span class="hint">${item.hint}</span>
+    </li>
+  `).join('');
+
+            suggestions.hidden = false;
+            input.setAttribute('aria-expanded', 'true');
+
+            // click + keyboard
+            suggestions.querySelectorAll('li').forEach(li => {
+                li.addEventListener('click', () => chooseSuggestion(li));
+                li.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') chooseSuggestion(li);
+                });
+            });
+        }
+
+        function chooseSuggestion(li) {
+            const text = li.children[1].textContent;
+            input.value = text;
+            clearBtn.hidden = false;
+            hideSuggestions();
+            pulseUnderline();
+        }
+
+        function hideSuggestions() {
+            suggestions.hidden = true;
+            suggestions.innerHTML = '';
+            input.setAttribute('aria-expanded', 'false');
+        }
+
+        function capitalize(s) {
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        }
+
+    </script>
+</body>
+
+</html>

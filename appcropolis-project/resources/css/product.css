@@ -1,0 +1,573 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Quicksand:wght@300..700&display=swap");
+
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+:root {
+    --background: #1f242d;
+    --second-background: #323946;
+    --text: #f1f3f2;
+    --paragraph: #555;
+    --hover-effect: #0ef;
+    --fill: #fff;
+    --stroke: #fff;
+    --shadow: #000;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "content stacked";
+    place-items: center;
+    min-height: 480px;
+    background: -webkit-linear-gradient(0deg, #1f242d, #182c53);
+}
+
+
+/* Content */
+.content {
+    padding-left: 120px;
+    color: var(--text);
+    -webkit-user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.intro-content {
+    padding-right: 100px;
+}
+
+.intro-content h1 {
+    color: transparent;
+    font-size: clamp(1.3em, 5vw, 3em);
+    line-height: 1.1;
+    animation: fade-in-out 12s linear infinite;
+}
+
+@keyframes fade-in-out {
+    0% {
+        color: #fff;
+        filter: hue-rotate(0deg);
+        text-shadow: 0 0 10px #00b3ff, 0 0 20px #00b3ff;
+    }
+
+    30%,
+    70% {
+        color: #fff;
+        filter: hue-rotate(360deg);
+        text-shadow: 0 0 10px #00b3ff, 0 0 20px #00b3ff;
+    }
+
+    100% {
+        color: transparent;
+        box-shadow: none;
+        filter: hue-rotate(0deg);
+    }
+}
+
+.content h1 {
+    font-size: clamp(1em, 4vw, 2em);
+    font-weight: 400;
+    background: -webkit-linear-gradient(0deg, #0ef, #0ef);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    padding-left: 5px;
+}
+
+.content p {
+    position: relative;
+    font-size: clamp(0.9em, 3vw, 1.2em);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding-right: 100px;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    overflow: hidden;
+    background: linear-gradient(90deg, #000, #fff, #000);
+    background-repeat: no-repeat;
+    background-size: 80%;
+    /*
+    animation: animate 12s linear infinite;
+    */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes animate {
+    0% {
+        background-position: -500%;
+    }
+
+    100% {
+        background-position: 500%;
+    }
+}
+
+/* From Uiverse.io by Shrawaan */
+/* Buttons */
+.shop-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    z-index: 1;
+}
+
+.shop-button::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, #00ffff, #ff00ff, #00ffff);
+    animation: rotate 4s linear infinite;
+    z-index: -2;
+}
+
+.shop-button::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: #0a0a0a;
+    border-radius: inherit;
+    z-index: -1;
+}
+
+.shop-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
+}
+
+.shop-button:hover .arrow {
+    transform: translateX(6px);
+}
+
+.arrow {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.3s ease-in-out;
+    color: #00ffff;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* From Uiverse.io by Shrawaan */
+/* t-shart cards */
+.stack {
+    position: relative;
+}
+
+.stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.stack img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.card {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 350px;
+    height: 500px;
+    border-radius: 2rem;
+    /*
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25),
+        0 15px 20px 0 rgba(0, 0, 0, 0.125);
+    transition: transform 0.6s;*/
+    user-select: none;
+}
+
+.card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.card:nth-last-child(n + 5) {
+    --x: calc(-50% + 90px);
+    transform: translate(var(--x), -50%) scale(0.85);
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.01);
+}
+
+.card:nth-last-child(4) {
+    --x: calc(-50% + 60px);
+    transform: translate(var(--x), -50%) scale(0.9);
+}
+
+.card:nth-last-child(3) {
+    --x: calc(-50% + 30px);
+    transform: translate(var(--x), -50%) scale(0.95);
+}
+
+.card:nth-last-child(2) {
+    --x: calc(-50%);
+    transform: translate(var(--x), -50%) scale(1);
+}
+
+.card:nth-last-child(1) {
+    --x: calc(-50% - 30px);
+    transform: translate(var(--x), -50%) scale(1.05);
+}
+
+.card:nth-last-child(1) img {
+    /*box-shadow: 0 1px 5px 5px rgb(0, 238, 255, 0.5);*/
+
+}
+
+.swap {
+    animation: swap 1.3s ease-out forwards;
+}
+
+@keyframes swap {
+    30% {
+        transform: translate(calc(var(--x) - 250px), -50%) scale(0.85) rotate(-5deg) rotateY(65deg);
+    }
+
+    100% {
+        transform: translate(calc(var(--x) - 30px), -50%) scale(0.5);
+        z-index: -1;
+    }
+}
+
+/* Media queries for keyframes */
+
+@media (max-width: 1200px) {
+    @keyframes swap {
+        30% {
+            transform: translate(calc(var(--x) - 200px), -50%) scale(0.85) rotate(-5deg) rotateY(65deg);
+        }
+
+        100% {
+            transform: translate(calc(var(--x) - 30px), -50%) scale(0.5);
+            z-index: -1;
+        }
+    }
+}
+
+@media (max-width: 1050px) {
+    @keyframes swap {
+        30% {
+            transform: translate(calc(var(--x) - 150px), -50%) scale(0.85) rotate(-5deg) rotateY(65deg);
+        }
+
+        100% {
+            transform: translate(calc(var(--x) - 30px), -50%) scale(0.5);
+            z-index: -1;
+        }
+    }
+}
+
+/* Media queries for other classes */
+
+@media (max-width: 1200px) {
+    .content {
+        padding-left: 80px;
+    }
+
+    .content p {
+        padding-right: 40px;
+    }
+
+    .card {
+        width: 250px;
+        height: 380px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .content {
+        padding-left: 60px;
+    }
+
+    .content p {
+        line-height: 1.5;
+    }
+
+    .card {
+        width: 220px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 990px) {
+    .content p {
+        padding-right: 0;
+    }
+
+    .card {
+        width: 200px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 950px) {
+    main {
+        grid-template-columns: 1fr;
+        grid-template-rows: 4fr 3fr;
+        grid-template-areas:
+            "stacked"
+            "content";
+    }
+
+    .content {
+        grid-area: content;
+        text-align: center;
+        padding: 0 90px;
+    }
+
+    .btn {
+        margin-bottom: 30px;
+    }
+
+    .stack {
+        grid-area: stacked;
+    }
+}
+
+@media (max-width: 650px) {
+    main {
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .content {
+        padding: 0 50px;
+    }
+
+    .content h1 {
+        padding-left: 0;
+    }
+
+    .btn {
+        padding: 8px 16px;
+    }
+
+    .card {
+        width: 180px;
+        height: 260px;
+    }
+
+    .product-page {
+        flex-direction: column;
+    }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .product-page {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-details {
+        text-align: center;
+    }
+
+    .shop-button {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .stack {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .color-options img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+
+/* From Uiverse.io by Shrawaan */
+/* ===== ============
+    Product  
+===== ===============*/
+.product-page {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2rem;
+    gap: 2rem;
+    justify-content: center;
+    background: -webkit-linear-gradient(90deg, #1f242d, #d7dce6);
+    min-height: 600px;
+}
+
+
+.product-gallery {
+    flex: 1 1 300px;
+    max-width: 400px;
+}
+
+#mainImage {
+    width: 100%;
+    border-radius: 1px;
+}
+
+.product-gallery img {
+    max-width: 100%;
+    height: auto;
+}
+
+.color-options {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.color-options img {
+    width: 60px;
+    cursor: pointer;
+}
+
+.color-options {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.color-options img {
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: border 0.3s;
+}
+
+.color-options img:hover {
+    border: 2px solid #007bff;
+}
+
+.product-details {
+    flex: 1 1 300px;
+    max-width: 400px;
+}
+
+.product-details h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #b12704;
+    ;
+    margin-bottom: 1rem;
+}
+
+.price del {
+    color: #888;
+    margin-left: 10px;
+}
+
+.rating {
+    margin: 10px 0;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+}
+
+select,
+input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.description {
+    margin-top: 2em;
+    font-size: 0.95em;
+    line-height: 1.5;
+    position: relative;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding-right: 100px;
+    letter-spacing: 1px;
+    overflow: hidden;
+    background: linear-gradient(90deg, #000, #fff, #000);
+    background-repeat: no-repeat;
+    background-size: 80%;
+    /*
+    animation: animate 12s linear infinite;
+    */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
